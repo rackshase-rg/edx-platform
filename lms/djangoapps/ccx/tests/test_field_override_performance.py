@@ -11,7 +11,6 @@ import ddt
 import mock
 import pytest
 import six
-from six.moves import range
 from ccx_keys.locator import CCXLocator
 from django.conf import settings
 from django.contrib.messages.storage.fallback import FallbackStorage
@@ -21,17 +20,10 @@ from django.test.utils import override_settings
 from edx_django_utils.cache import RequestCache
 from opaque_keys.edx.keys import CourseKey
 from pytz import UTC
-from xblock.core import XBlock
-
-from lms.djangoapps.courseware.testutils import FieldOverrideTestMixin
-from lms.djangoapps.courseware.views.views import progress
-from lms.djangoapps.ccx.tests.factories import CcxFactory
-from lms.djangoapps.courseware.field_overrides import OverrideFieldData
-from openedx.core.djangoapps.content.block_structure.api import get_course_in_cache
-from openedx.core.djangoapps.waffle_utils.testutils import WAFFLE_TABLES
-from openedx.features.content_type_gating.models import ContentTypeGatingConfig
+from six.moves import range
 from student.models import CourseEnrollment
 from student.tests.factories import UserFactory
+from xblock.core import XBlock
 from xmodule.modulestore.tests.django_utils import (
     TEST_DATA_MONGO_MODULESTORE,
     TEST_DATA_SPLIT_MODULESTORE,
@@ -39,6 +31,14 @@ from xmodule.modulestore.tests.django_utils import (
 )
 from xmodule.modulestore.tests.factories import CourseFactory, check_mongo_calls, check_sum_of_calls
 from xmodule.modulestore.tests.utils import ProceduralCourseTestMixin
+
+from lms.djangoapps.ccx.tests.factories import CcxFactory
+from lms.djangoapps.courseware.field_overrides import OverrideFieldData
+from lms.djangoapps.courseware.testutils import FieldOverrideTestMixin
+from lms.djangoapps.courseware.views.views import progress
+from openedx.core.djangoapps.content.block_structure.api import get_course_in_cache
+from openedx.core.djangoapps.waffle_utils.testutils import WAFFLE_TABLES
+from openedx.features.content_type_gating.models import ContentTypeGatingConfig
 
 QUERY_COUNT_TABLE_BLACKLIST = WAFFLE_TABLES
 
@@ -57,7 +57,7 @@ class FieldOverridePerformanceTestCase(FieldOverrideTestMixin, ProceduralCourseT
     """
     __test__ = False
     # Tell Django to clean out all databases, not just default
-    multi_db = True
+    databases = '__all__'
 
     # TEST_DATA must be overridden by subclasses
     TEST_DATA = None
