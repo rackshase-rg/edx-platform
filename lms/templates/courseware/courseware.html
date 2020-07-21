@@ -271,3 +271,14 @@ ${HTML(fragment.foot_html())}
       % endif
     </nav>
 % endif
+
+<%static:require_module_async module_name="js/commerce/track_ecommerce_events" class_name="TrackECommerceEvents">
+  var sockLink = $("#sock");
+
+  TrackECommerceEvents.trackUpsellClick(sockLink, 'in_course_sock', {
+      pageName: "in_course",
+      linkType: "button",
+      linkCategory: "green_upgrade"
+  });
+
+</%static:require_module_async>
