@@ -46,5 +46,5 @@ def close_all_caches():
         cache.close()
 
 
-def post_fork(server, worker): # pylint: disable=W0613
+def post_fork(server, worker):  # pylint: disable=W0613
     close_all_caches()

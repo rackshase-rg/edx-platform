@@ -11,6 +11,7 @@ pythonpath = "/edx/app/edxapp/edx-platform"
 max_requests = 50
 workers = 7
 
+
 def pre_request(worker, req):
     worker.log.info("%s %s" % (req.method, req.path))
 
@@ -45,5 +46,5 @@ def close_all_caches():
         cache.close()
 
 
-def post_fork(server, worker): # pylint: disable=W0613
+def post_fork(server, worker):  # pylint: disable=W0613
     close_all_caches()
